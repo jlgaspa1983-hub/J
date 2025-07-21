@@ -1,0 +1,5 @@
+﻿[
+  { "entity": "127.0.0.1", "risk": 45, "confidence": 80, "nb_records": 5 },
+  { "entity": "192.168.1.1", "risk": 10, "confidence": 60, "nb_records": 2 },
+  { "entity": "10.0.0.5", "risk": 90, "confidence": 95, "nb_records": 12 }
+]

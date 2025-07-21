@@ -1,3 +1,9 @@
+## 📊 Data‑Science Extras
+
+A Jupyter notebook demonstrating how to load SpiderFoot JSON output, perform K‑Means clustering and Isolation Forest anomaly detection, and visualize results.
+
+- [extras/notebooks/data_analysis.ipynb](extras/notebooks/data_analysis.ipynb)
+
 <a href="https://www.spiderfoot.net/r.php?u=aHR0cHM6Ly93d3cuc3BpZGVyZm9vdC5uZXQv&s=os_gh"><img src="https://www.spiderfoot.net/wp-content/themes/spiderfoot/img/spiderfoot-wide.png"></a>
 
 
