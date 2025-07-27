@@ -5,3 +5,5 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile.full
+    ports :
+      - 5001:5001 
