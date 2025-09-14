@@ -95,21 +95,71 @@ To install and run SpiderFoot, you need at least Python 3.7 and a number of Pyth
 #### Stable build (packaged release):
 
 ```
- wget https://github.com/smicallef/spiderfoot/archive/v4.0.tar.gz
- tar zxvf v4.0.tar.gz
- cd spiderfoot-4.0
- pip3 install -r requirements.txt
- python3 ./sf.py -l 127.0.0.1:5001
+wget https://github.com/smicallef/spiderfoot/archive/v4.0.tar.gz
+tar zxvf v4.0.tar.gz
+cd spiderfoot-4.0
+pip3 install -r requirements.txt
+python3 ./sf.py -l 127.0.0.1:5001
 ```
 
 #### Development build (cloning git master branch):
 
 ```
- git clone https://github.com/smicallef/spiderfoot.git
- cd spiderfoot
- pip3 install -r requirements.txt
- python3 ./sf.py -l 127.0.0.1:5001
+git clone https://github.com/smicallef/spiderfoot.git
+cd spiderfoot
+pip3 install -r requirements.txt
+python3 ./sf.py -l 127.0.0.1:5001
 ```
+
+#### Using Docker Compose
+
+SpiderFoot provides multiple Docker Compose configurations for different use cases:
+
+**Basic Setup (recommended for most users):**
+
+```bash
+docker-compose up -d
+```
+
+Access the web interface at `http://localhost:5001`
+
+**Development Setup (with mounted source code for development):**
+
+```bash
+docker-compose -f docker-compose-dev.yml up -d
+```
+
+Access the web interface at `http://localhost:5001`
+
+**Full Setup (includes all dependencies and tools):**
+
+```bash
+docker-compose -f docker-compose-full.yml up -d
+```
+
+Access the web interface at `http://localhost:5001`
+
+**Stopping Containers:**
+
+To stop and remove containers:
+
+```bash
+docker-compose down
+# or for dev/full setups:
+docker-compose -f docker-compose-dev.yml down
+docker-compose -f docker-compose-full.yml down
+```
+
+**Persistent Data:**
+
+- All configurations and scan data are stored in the `spiderfoot-db` volume
+- To completely remove all data, add the `-v` flag when running `docker-compose down`
+
+**Environment Variables:**
+
+- `TZ`: Set the timezone (e.g., `TZ=UTC`)
+- `SF_SERVER_HOST`: Web server host (default: `0.0.0.0`)
+- `SF_SERVER_PORT`: Web server port (default: `5001`)
 
 Check out the [documentation](https://www.spiderfoot.net/documentation) and our [asciinema videos](https://asciinema.org/~spiderfoot) for more tutorials.
 
