@@ -1,5 +1,5 @@
-version: "3"
-
+# Docker Compose v2+: explicit 'version' key is obsolete; compose schema is detected automatically
+ 
 services:
   spiderfoot:
     build:
