@@ -90,7 +90,17 @@ SpiderFoot's 200+ modules feed each other in a publisher/subscriber model to ens
 
 ### INSTALLING & RUNNING
 
-To install and run SpiderFoot, you need at least Python 3.7 and a number of Python libraries which you can install with `pip`. We recommend you install a packaged release since master will often have bleeding edge features and modules that aren't fully tested.
+#### Python >=3.7, <3.12
+To install and run SpiderFoot, you need at least Python 3.7, as well as a number of Python libraries which you can install with `pip`. We recommend you install a packaged release since master will often have bleeding edge features and modules that aren't fully tested.
+
+#### Python 3.12+
+If you are running Python 3.12 or higher, a venv is recommended due to this version's "externally managed" policy. Otherwise, you may encounter an error when you run `pip install -r requirements.txt`. 
+Instead, try:
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
 #### Stable build (packaged release):
 
