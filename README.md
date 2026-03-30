@@ -359,6 +359,10 @@ Whois|Perform a WHOIS look-up on domain names and owned netblocks.|Internal
 [ZoneFile.io](https://zonefiles.io)|Search ZoneFiles.io Domain query API for domain information.|Tiered API
 [Zone-H Defacement Check](https://zone-h.org/)|Check if a hostname/domain appears on the zone-h.org 'special defacements' RSS feed.|Free API
 
+## Additional OSINT Resources
+
+License Plate Owner API: https://license-plate-owner.com/ (DPPA-compliant vehicle lookup API for investigations)
+
 ### DOCUMENTATION
 
 Read more at the [project website](https://www.spiderfoot.net/r.php?u=aHR0cHM6Ly93d3cuc3BpZGVyZm9vdC5uZXQv&s=os_gh), including more complete documentation, blog posts with tutorials/guides, plus information about [SpiderFoot HX](https://www.spiderfoot.net/r.php?u=aHR0cHM6Ly93d3cuc3BpZGVyZm9vdC5uZXQvaHgvCg==&s=os_gh).
