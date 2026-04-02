@@ -6,6 +6,7 @@ platforms = ["osx-arm64", "linux-64"]
 version = "0.1.0"
 
 [tasks]
+spiderfoot = "python ./sf.py -l 127.0.0.1:5001"
 
 [dependencies]
 dnspython = ">=2.3.0,<3"

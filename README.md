@@ -111,6 +111,23 @@ To install and run SpiderFoot, you need at least Python 3.7 and a number of Pyth
  python3 ./sf.py -l 127.0.0.1:5001
 ```
 
+### Using Pixi
+
+SpiderFoot is now available on Pixi, the Python package index for both Linux 64 and MacOS ARM64 platforms.
+
+Install Pixi:
+
+```
+curl -sSL https://install.pixi.dev | sh
+```
+
+To install and run SpiderFoot using Pixi, after either cloning the repo or downloading a release, simply run:
+
+```
+pixi install
+pixi run spiderfoot # This uses the command defined in pixi.toml, which is "python ./sf.py -l 127.0.0.1:5001"
+```
+
 Check out the [documentation](https://www.spiderfoot.net/documentation) and our [asciinema videos](https://asciinema.org/~spiderfoot) for more tutorials.
 
 ### COMMUNITY
