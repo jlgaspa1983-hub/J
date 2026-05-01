@@ -632,7 +632,7 @@ class SpiderFootCorrelator:
                             if netaddr.IPAddress(event_data) in netaddr.IPNetwork(r):
                                 self.log.debug(f"found subnet match: {event_data} in {r}")
                                 return True
-                        except Exception:
+                        except (ValueError, netaddr.core.AddrFormatError):
                             pass
 
                 if rule['match_method'] == 'exact' and event_data in reference:
