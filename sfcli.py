@@ -151,10 +151,9 @@ class SpiderFootCli(cmd.Cmd):
             print(cout)
 
         if self.ownopts['cli.spool']:
-            f = codecs.open(self.ownopts['cli.spool_file'], "a", encoding="utf-8")
-            f.write(sout)
-            f.write('\n')
-            f.close()
+            with codecs.open(self.ownopts['cli.spool_file'], "a", encoding="utf-8") as f:
+                f.write(sout)
+                f.write('\n')
 
     # Shortcut commands
     def do_debug(self, line):
@@ -204,15 +203,13 @@ class SpiderFootCli(cmd.Cmd):
     # Run before all commands to handle history and spooling
     def precmd(self, line):
         if self.ownopts['cli.history'] and line != "EOF":
-            f = codecs.open(self.ownopts["cli.history_file"], "a", encoding="utf-8")
-            f.write(line)
-            f.write('\n')
-            f.close()
+            with codecs.open(self.ownopts["cli.history_file"], "a", encoding="utf-8") as f:
+                f.write(line)
+                f.write('\n')
         if self.ownopts['cli.spool']:
-            f = codecs.open(self.ownopts["cli.spool_file"], "a", encoding="utf-8")
-            f.write(self.prompt + line)
-            f.write('\n')
-            f.close()
+            with codecs.open(self.ownopts["cli.spool_file"], "a", encoding="utf-8") as f:
+                f.write(self.prompt + line)
+                f.write('\n')
 
         return line
 
@@ -519,9 +516,8 @@ class SpiderFootCli(cmd.Cmd):
 
             if pipecmd == "file":
                 try:
-                    f = codecs.open(pipeargs, "w", encoding="utf-8")
-                    f.write(out)
-                    f.close()
+                    with codecs.open(pipeargs, "w", encoding="utf-8") as f:
+                        f.write(out)
                 except BaseException as e:
                     self.edprint(f"Unable to write to file: {e}")
                     return
