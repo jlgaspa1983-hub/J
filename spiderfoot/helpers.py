@@ -758,7 +758,7 @@ class SpiderFootHelpers():
 
         try:
             return phonenumbers.is_valid_number(phonenumbers.parse(phone))
-        except Exception:
+        except phonenumbers.NumberParseException:
             return False
 
     @staticmethod
