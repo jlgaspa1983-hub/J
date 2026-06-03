@@ -97,7 +97,7 @@ class sfp_tool_trufflehog(SpiderFootPlugin):
             try:
                 extracted = eventData.split(": ")[1].replace("<SFURL>", "").replace("</SFURL>", "")
                 parsed = urlparse(extracted)
-                hostname = parsed.hostname.lower() if parsed.hostname else ""
+                hostname = (parsed.hostname or "").lower()
                 if hostname in ["github.com", "gitlab.com", "bitbucket.org"]:
                     url = extracted
                 else:
@@ -110,7 +110,7 @@ class sfp_tool_trufflehog(SpiderFootPlugin):
             try:
                 extracted = eventData.split("\n")[1].replace("URL: ", "")
                 parsed = urlparse(extracted)
-                hostname = parsed.hostname.lower() if parsed.hostname else ""
+                hostname = (parsed.hostname or "").lower()
                 if hostname in ["github.com", "gitlab.com", "bitbucket.org"]:
                     url = extracted
                 else:
