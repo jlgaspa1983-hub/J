@@ -555,7 +555,11 @@ class SpiderFootCorrelator:
             """
             topfield, subfield = field.split(".")
             if field.startswith(topfield + "."):
-                for s in event[topfield]:
+                # Iterate over a snapshot copy: removing from the list being
+                # iterated advances the iterator past the next element, so a
+                # non-matching sub-event right after a removed one is skipped
+                # and wrongly survives in the bucket.
+                for s in event[topfield][:]:
                     if s[subfield] != value:
                         event[topfield].remove(s)
 
