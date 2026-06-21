@@ -37,6 +37,32 @@ class TestSpiderFootCorrelator(unittest.TestCase):
         with self.assertRaises(ValueError):
             correlator.run_correlations()
 
+    def test_aggregate_events_does_not_leak_non_matching_subevents(self):
+        sfdb = SpiderFootDb(self.default_options, False)
+        correlator = SpiderFootCorrelator(sfdb, {})
+
+        rule = {"id": "r", "field": "child.data"}
+        events = [
+            {
+                "id": "E1",
+                "child": [
+                    {"data": "a"},
+                    {"data": "b"},
+                    {"data": "c"},
+                    {"data": "d"},
+                ],
+            }
+        ]
+        buckets = correlator.aggregate_events(rule, events)
+
+        # Each bucket must keep only the sub-events whose subfield matches the
+        # bucket value. Before the fix, mutating the list while iterating
+        # skipped the element after each removed one, leaking non-matching
+        # children (e.g. bucket "a" wrongly kept ["a", "c"]).
+        for value in ("a", "b", "c", "d"):
+            kept = [child["data"] for child in buckets[value][0]["child"]]
+            self.assertEqual(kept, [value])
+
     def test_build_db_criteria_argument_matchrule_invalid_type_should_raise_TypeError(self):
         sfdb = SpiderFootDb(self.default_options, False)
         correlator = SpiderFootCorrelator(sfdb, {})
