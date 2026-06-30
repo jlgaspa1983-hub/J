@@ -1,4 +1,5 @@
 # test_spiderfoot.py
+import os
 import pytest
 import unittest
 
@@ -71,10 +72,29 @@ class TestSpiderFoot(unittest.TestCase):
     def test_optValueToData_argument_val_filename_should_return_file_contents_as_string(self):
         sf = SpiderFoot(self.default_options)
 
-        test_string = "@VERSION"
-        opt_data = sf.optValueToData(test_string)
-        self.assertIsInstance(opt_data, str)
-        self.assertTrue(opt_data.startswith("SpiderFoot"))
+        # Place the fixture inside the SpiderFoot data directory so the
+        # @-prefix file loader (which is now restricted to that directory
+        # to prevent CWE-22 path traversal) can read it.
+        from spiderfoot import SpiderFootHelpers
+        data_path = SpiderFootHelpers.dataPath()
+        fixture = os.path.join(data_path, "optValueToData-fixture.txt")
+        with open(fixture, "w") as fh:
+            fh.write("SpiderFoot test fixture")
+        try:
+            opt_data = sf.optValueToData(f"@{fixture}")
+            self.assertIsInstance(opt_data, str)
+            self.assertTrue(opt_data.startswith("SpiderFoot"))
+        finally:
+            os.unlink(fixture)
+
+    def test_optValueToData_argument_val_filename_outside_data_dir_should_return_None(self):
+        """@-prefixed paths outside the SpiderFoot data directory must be refused (CWE-22)."""
+        sf = SpiderFoot(self.default_options)
+
+        # /etc/hosts is world-readable on every supported OS but lives outside
+        # the SpiderFoot data directory, so the loader must refuse it.
+        opt_data = sf.optValueToData("@/etc/hosts")
+        self.assertIsNone(opt_data)
 
     def test_optValueToData_argument_val_invalid_type_should_return_None(self):
         sf = SpiderFoot(self.default_options)

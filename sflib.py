@@ -156,11 +156,33 @@ class SpiderFoot:
             return None
 
         if val.startswith('@'):
-            fname = val.split('@')[1]
+            fname = val.split('@', 1)[1]
             self.info(f"Loading configuration data from: {fname}")
 
+            # Restrict file reads to the SpiderFoot data directory to avoid
+            # arbitrary file disclosure through option values that originate
+            # from the web UI / saved configuration (CWE-22).
             try:
-                with open(fname, "r") as f:
+                data_root = os.path.realpath(SpiderFootHelpers.dataPath())
+                requested = os.path.realpath(
+                    os.path.join(data_root, fname) if not os.path.isabs(fname)
+                    else fname
+                )
+                if (
+                    requested != data_root
+                    and os.path.commonpath([requested, data_root]) != data_root
+                ):
+                    self.error(
+                        f"Refusing to load option file outside SpiderFoot "
+                        f"data directory ({data_root}): {fname}"
+                    )
+                    return None
+            except (TypeError, ValueError) as e:
+                self.error(f"Unable to validate option file path, {fname}: {e}")
+                return None
+
+            try:
+                with open(requested, "r") as f:
                     return f.read()
             except Exception as e:
                 self.error(f"Unable to open option file, {fname}: {e}")
