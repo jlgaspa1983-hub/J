@@ -1,0 +1,31 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "fix-install-error" ]
+  pull_request:
+    branches: [ "fix-install-error" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+import trio
+import httpx
+from holehe.modules.social_media.instagram import instagram
+
+async def main():
+    email = "c.dmierc@gmail.com"
+    out = []
+    client = httpx.AsyncClient()
+    await instagram(email, client, out)
+    print(out)
+    await client.aclose()
+
+trio.run(main)
